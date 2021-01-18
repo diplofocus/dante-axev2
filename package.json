@@ -1,0 +1,12 @@
+{
+  "name": "danteaxe",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "cd backend && strapi develop",
+    "start": "cd backend && strapi start",
+    "build": "cd backend && strapi build",
+    "strapi": "cd backend && strapi"
+  }
+}
