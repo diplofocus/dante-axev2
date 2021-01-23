@@ -31,3 +31,8 @@ export async function getProduct(slug) {
   const products = await fetchAPI(`/products?slug=${slug}`);
   return products?.[0];
 }
+
+export async function getFinishes() {
+  const finishes = await fetchAPI(`/wood-finishes`);
+  return finishes;
+}

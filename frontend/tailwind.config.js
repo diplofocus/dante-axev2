@@ -3,6 +3,9 @@ const { colors } = require(`tailwindcss/defaultTheme`);
 module.exports = {
   darkMode: "media",
   purge: ["./components/**/*.js", "./pages/**/*.js"],
+  plugins: [
+    require("@tailwindcss/custom-forms"),
+  ],
   theme: {
     extend: {
       colors: {

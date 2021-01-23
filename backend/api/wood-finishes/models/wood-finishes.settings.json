@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wood_finishes",
+  "info": {
+    "name": "Wood Finishes",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "FinishImage": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "Name": {
+      "type": "string"
+    }
+  }
+}

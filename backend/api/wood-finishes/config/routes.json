@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/wood-finishes",
+      "handler": "wood-finishes.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/wood-finishes/count",
+      "handler": "wood-finishes.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/wood-finishes/:id",
+      "handler": "wood-finishes.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/wood-finishes",
+      "handler": "wood-finishes.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/wood-finishes/:id",
+      "handler": "wood-finishes.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/wood-finishes/:id",
+      "handler": "wood-finishes.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

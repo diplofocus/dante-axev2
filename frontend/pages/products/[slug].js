@@ -1,10 +1,14 @@
+import { useState, useMemo } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { getProducts, getProduct } from "../../utils/api";
+import { getProducts, getProduct, getFinishes } from "../../utils/api";
 import { getStrapiMedia } from "../../utils/medias";
 import { Carousel } from "react-responsive-carousel";
 
-const ProductPage = ({ product }) => {
+const ProductPage = ({ product, finishes = [], finishOptions }) => {
+  const [finish, setFinish] = useState(null);
+  const currentFinish = finishes.find((f) => f.id === finish) || {};
+  const isCustom = isCustomBoxProduct(product);
   const router = useRouter();
   if (router.isFallback) {
     return <div>Loading category...</div>;
@@ -25,7 +29,7 @@ const ProductPage = ({ product }) => {
           {product.image.map((img) => (
             <img
               key={img.hash}
-              src={getStrapiMedia(img.formats.thumbnail.url)}
+              src={getStrapiMedia(img.url)}
               className="m-auto"
               alt={product.title}
             />
@@ -38,11 +42,51 @@ const ProductPage = ({ product }) => {
             {product.title} - ${product.price}
           </h4>
           <div className="mt-1 text-gray-600">{product.description}</div>
+          {isBoxProduct(product) && (
+            <>
+              {isCustom && (
+                <label className="block mt-4">
+                  <span className="text-gray-700">Box Description</span>
+                  <textarea
+                    className="form-textarea mt-1 block w-full"
+                    rows="3"
+                    placeholder="Describe what you want on your custom box."
+                  ></textarea>
+                </label>
+              )}
+              <div className="mt-4 text-gray-600 grid grid-cols-2 gap-4">
+                {finishes.map((x) => (
+                  <div className="text-center">
+                    <img
+                      onClick={() => setFinish(x.id)}
+                      key={x.id}
+                      src={getStrapiMedia(x.FinishImage.url)}
+                      alt={x.id}
+                      width="auto"
+                      height="200px"
+                      className={
+                        (finish === x.id &&
+                          "border-solid border-8 border-primary-600") ||
+                        ""
+                      }
+                    />
+                    <p className={(finish === x.id && " font-semibold") || ""}>
+                      {x.Name}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {product.status === "published" ? (
           <button
-            className="snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow"
+            className={`snipcart-add-item mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow ${
+              !finish ? "cursor-not-allowed" : ""
+            }`}
+            disabled={!!!finish}
+            data-api-key={process.env.NEXT_SNIPCART_API_KEY}
             data-item-id={product.id}
             data-item-price={product.price}
             data-item-url={router.asPath}
@@ -52,8 +96,14 @@ const ProductPage = ({ product }) => {
             )}
             data-item-name={product.title}
             v-bind="customFields"
+            data-item-custom1-name="Wood finish"
+            data-item-custom1-options={finishOptions}
+            data-item-custom1-value={currentFinish.Name}
+            data-item-custom2-name={isCustom ? "Box description" : undefined}
+            data-item-custom2-type={isCustom ? "textarea" : undefined}
+            data-item-custom2-value={isCustom ? "textarea" : undefined}
           >
-            Add to cart
+            {!finish ? "Choose a wood finish" : "Add to cart"}
           </button>
         ) : (
           <div className="text-center mr-10 mb-1" v-else>
@@ -77,13 +127,21 @@ const ProductPage = ({ product }) => {
 
 export default ProductPage;
 
+const isBoxProduct = (p) =>
+  p.categories.some((x) => ["boxes", "custom"].includes(x.slug));
+const isCustomBoxProduct = (p) => p.categories.some((x) => x.slug === "custom");
+
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.slug);
-  return { props: { product } };
+  console.log(product);
+  const finishes = isBoxProduct(product) ? await getFinishes() : [];
+  const finishOptions = finishes.map((f) => f.Name).join("|");
+  return { props: { product, finishes, finishOptions } };
 }
 
 export async function getStaticPaths() {
   const products = await getProducts();
+
   return {
     paths: products.map((_product) => {
       return {

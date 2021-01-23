@@ -1131,6 +1131,15 @@
     "mkdirp" "^1.0.4"
     "rimraf" "^2.7.1"
 
+"@tailwindcss/custom-forms@^0.2.1":
+  "integrity" "sha512-XdP5XY6kxo3x5o50mWUyoYWxOPV16baagLoZ5uM41gh6IhXzhz/vJYzqrTb/lN58maGIKlpkxgVsQUNSsbAS3Q=="
+  "resolved" "https://registry.npmjs.org/@tailwindcss/custom-forms/-/custom-forms-0.2.1.tgz"
+  "version" "0.2.1"
+  dependencies:
+    "lodash" "^4.17.11"
+    "mini-svg-data-uri" "^1.0.3"
+    "traverse" "^0.6.6"
+
 "@types/eslint-visitor-keys@^1.0.0":
   "integrity" "sha512-OCutwjDZ4aFS6PB1UZ988C4YgwlBHJd6wCeQqaLdmadZ/7e+w79+hbMUFC1QXDNCmdyoRfAFdm0RypzwR+Qpag=="
   "resolved" "https://registry.npmjs.org/@types/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz"
@@ -4231,6 +4240,11 @@
   "resolved" "https://registry.npmjs.org/mimic-fn/-/mimic-fn-2.1.0.tgz"
   "version" "2.1.0"
 
+"mini-svg-data-uri@^1.0.3":
+  "integrity" "sha512-zd6KCAyXgmq6FV1mR10oKXYtvmA9vRoB6xPSTUJTbFApCtkefDnYueVR1gkof3KcdLZo1Y8mjF2DFmQMIxsHNQ=="
+  "resolved" "https://registry.npmjs.org/mini-svg-data-uri/-/mini-svg-data-uri-1.2.3.tgz"
+  "version" "1.2.3"
+
 "minimalistic-assert@^1.0.0", "minimalistic-assert@^1.0.1":
   "integrity" "sha512-UtJcAD4yEaGtjPezWuO9wC4nwUnVH/8/Im3yEHQP4b67cXlD/Qr9hdITCU1xDbSEXg2XKNaP8jsReV7vQd00/A=="
   "resolved" "https://registry.npmjs.org/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz"
@@ -4411,7 +4425,7 @@
   "resolved" "https://registry.npmjs.org/next-tick/-/next-tick-1.0.0.tgz"
   "version" "1.0.0"
 
-"next@9.5.5":
+"next@^9.5.5", "next@9.5.5":
   "integrity" "sha512-KF4MIdTYeI6YIGODNw27w9HGzCll4CXbUpkP6MNvyoHlpsunx8ybkQHm/hYa7lWMozmsn58LwaXJOhe4bSrI0g=="
   "resolved" "https://registry.npmjs.org/next/-/next-9.5.5.tgz"
   "version" "9.5.5"
@@ -5470,7 +5484,7 @@
     "randombytes" "^2.0.5"
     "safe-buffer" "^5.1.0"
 
-"react-dom@17.0.1":
+"react-dom@^16.13.1", "react-dom@17.0.1":
   "integrity" "sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.1.tgz"
   "version" "17.0.1"
@@ -5505,7 +5519,7 @@
     "prop-types" "^15.5.8"
     "react-easy-swipe" "^0.0.21"
 
-"react@17.0.1":
+"react@^16.13.1", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -6317,7 +6331,7 @@
     "slice-ansi" "^2.1.0"
     "string-width" "^3.0.0"
 
-"tailwindcss@^1.9.5":
+"tailwindcss@^1.0", "tailwindcss@^1.9.5":
   "integrity" "sha512-nY8WYM/RLPqGsPEGEV2z63riyQPcHYZUJpAwdyBzVpxQHOHqHE+F/fvbCeXhdF1+TA5l72vSkZrtYCB9hRcwkQ=="
   "resolved" "https://registry.npmjs.org/tailwindcss/-/tailwindcss-1.9.6.tgz"
   "version" "1.9.6"
@@ -6467,7 +6481,7 @@
   dependencies:
     "punycode" "^2.1.0"
 
-"traverse@0.6.6":
+"traverse@^0.6.6", "traverse@0.6.6":
   "integrity" "sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc="
   "resolved" "https://registry.npmjs.org/traverse/-/traverse-0.6.6.tgz"
   "version" "0.6.6"
