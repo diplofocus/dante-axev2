@@ -127,13 +127,14 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
 
 export default ProductPage;
 
-const isBoxProduct = (p) =>
-  p.categories.some((x) => ["boxes", "custom"].includes(x.slug));
-const isCustomBoxProduct = (p) => p.categories.some((x) => x.slug === "custom");
+const isBoxProduct = (p = { categories: [] }) =>
+  (p || { categories: [] }).categories.some((x) => ["boxes", "custom"].includes(x.slug));
+
+const isCustomBoxProduct = (p = { categories: [] }) =>
+  (p || { categories: [] }).categories.some((x) => x.slug === "custom");
 
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.slug);
-  console.log(product);
   const finishes = isBoxProduct(product) ? await getFinishes() : [];
   const finishOptions = finishes.map((f) => f.Name).join("|");
   return { props: { product, finishes, finishOptions } };
