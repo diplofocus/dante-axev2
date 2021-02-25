@@ -4,6 +4,7 @@ module.exports = {
   darkMode: "media",
   purge: ["./components/**/*.js", "./pages/**/*.js"],
   plugins: [
+    require("@tailwindcss/typography"),
     require("@tailwindcss/custom-forms"),
   ],
   theme: {

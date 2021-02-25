@@ -1,14 +1,17 @@
 import Head from "next/head";
 import ProductsList from "../components/ProductsList";
 import { getProducts } from "../utils/api";
+import { Provider } from "../contexts/shoppingCartContext";
 
 const HomePage = ({ products }) => {
   return (
     <div className="dark">
-      <Head>
-        <title>Dante Axe</title>
-      </Head>
-      <ProductsList products={products} />
+      <Provider value={[1]}>
+        <Head>
+          <title>Dante Axe</title>
+        </Head>
+        <ProductsList products={products} />
+      </Provider>
     </div>
   );
 };
