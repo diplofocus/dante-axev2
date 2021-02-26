@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { getProducts, getProduct, getFinishes } from "../../utils/api";
@@ -9,6 +9,7 @@ import { Consumer } from "../../contexts/shoppingCartContext";
 const ProductPage = ({ product, finishes = [], finishOptions }) => {
   const [finish, setFinish] = useState(null);
   const [added, setAdded] = useState(false);
+  const [customDescription, setDesc] = useState("");
   const currentFinish = finishes.find((f) => f.id === finish) || {};
   const isCustom = isCustomBoxProduct(product);
   const router = useRouter();
@@ -56,6 +57,8 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                           className="form-textarea mt-1 block w-full"
                           rows="3"
                           placeholder="Describe what you want on your custom box."
+                          onChange={(e) => setDesc(e.target.value)}
+                          value={customDescription}
                         ></textarea>
                       </label>
                     )}
@@ -93,7 +96,11 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                 <button
                   onClick={() => {
                     setAdded(true);
-                    addItem({ ...product, finish: currentFinish });
+                    addItem({
+                      ...product,
+                      finish: currentFinish,
+                      customDescription: customDescription || undefined,
+                    });
                   }}
                   className={`mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow ${
                     !finish ? "cursor-not-allowed" : ""

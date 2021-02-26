@@ -46,6 +46,12 @@ const ShoppingCart = () => {
                   console.log("completed", data, actions);
                   clearCart();
                   setPurchaseMade(true);
+                  const orderResponse = {
+                    orderId: data.orderID,
+                    payerId: data.payerID,
+                    cart,
+                  };
+                  console.log(orderResponse);
                 }}
               />
             )
