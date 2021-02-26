@@ -29,7 +29,7 @@
       "path": "/orders",
       "handler": "orders.create",
       "config": {
-        "policies": []
+        "policies": ["isPayPal"]
       }
     },
     {
