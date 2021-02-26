@@ -27,7 +27,7 @@ const ShoppingCart = () => {
                       console.log(i);
                       let id = i.title;
                       if (i.finish) {
-                        id += "with " + i.finish.Name;
+                        id += " with " + i.finish.Name + " finish";
                       }
                       return {
                         reference_id: id,
