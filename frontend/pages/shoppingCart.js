@@ -22,9 +22,6 @@ const ShoppingCart = () => {
                   currency: "EUR",
                 }}
                 createOrder={(data, actions) => {
-                  console.log(data);
-                  console.log(actions);
-                  console.log(cart);
                   return actions.order.create({
                     purchase_units: cart.map((i) => {
                       console.log(i);
@@ -34,6 +31,7 @@ const ShoppingCart = () => {
                       }
                       return {
                         reference_id: id,
+                        item: i,
                         amount: {
                           currency_code: "EUR",
                           value: i.price,
@@ -43,7 +41,6 @@ const ShoppingCart = () => {
                   });
                 }}
                 onApprove={(data, actions) => {
-                  console.log("completed", data, actions);
                   clearCart();
                   setPurchaseMade(true);
                   const orderResponse = {
@@ -51,7 +48,6 @@ const ShoppingCart = () => {
                     payerId: data.payerID,
                     cart,
                   };
-                  console.log(orderResponse);
                 }}
               />
             )
