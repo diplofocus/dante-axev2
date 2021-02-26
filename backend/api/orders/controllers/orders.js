@@ -15,7 +15,10 @@ module.exports = {
       const { data, files } = parseMultipartData(ctx);
       entity = await strapi.services.orders.create(data, { files });
     } else {
-      entity = await strapi.services.orders.create(ctx.request.body);
+      entity = await strapi.services.orders.create({
+        orderId: ctx.request.body.id,
+        orderData: ctx.request.body,
+      });
     }
     return sanitizeEntity(entity, { model: strapi.models.orders });
   },
