@@ -25,9 +25,9 @@ const ShoppingCart = () => {
                   return actions.order.create({
                     purchase_units: cart.map((i) => {
                       console.log(i);
-                      let id = i.id;
+                      let id = i.title;
                       if (i.finish) {
-                        id += i.finish.id;
+                        id += "with " + i.finish.Name;
                       }
                       return {
                         reference_id: id,
