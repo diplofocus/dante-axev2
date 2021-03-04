@@ -6,8 +6,29 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/custom-forms"),
+    require("@tailwindcss/forms"),
   ],
   theme: {
+    customForms: theme => ({
+      default: {
+        input: {
+          backgroundColor: theme('colors.gray.700'),
+          '&:focus': {
+            backgroundColor: theme('colors.gray.400'),
+          }
+        },
+        select: {
+          borderColor: theme('colors.gray.700'),
+          color: theme('colors.gray.300'),
+          boxShadow: theme('boxShadow.default'),
+          backgroundColor: theme('colors.gray.700'),
+          '&:focus': {
+            backgroundColor: theme('colors.gray.900'),
+            borderColor: theme('colors.primary.900'),
+          }
+        },
+      },
+    }),
     extend: {
       colors: {
         primary: colors.indigo,

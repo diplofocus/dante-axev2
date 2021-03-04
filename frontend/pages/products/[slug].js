@@ -8,6 +8,7 @@ import { Consumer } from "../../contexts/shoppingCartContext";
 
 const ProductPage = ({ product, finishes = [], finishOptions }) => {
   const [options, setOptions] = useState({});
+  console.log(options);
   const [added, setAdded] = useState(false);
   const currentFinish = options.finish
     ? finishes.find((f) => f.id === options.finish)
@@ -57,6 +58,9 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                     finishes={finishes}
                   />
                 )}
+                {isShirt(product) && (
+                  <ShirtForm options={options} setOptions={setOptions} />
+                )}
               </div>
 
               {product.status === "published" ? (
@@ -65,20 +69,31 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                     setAdded(true);
                     addItem({
                       ...product,
-                      finish: currentFinish,
-                      customDescription: options.description || undefined,
+                      finish: isBoxProduct ? currentFinish : undefined,
+                      customDescription:
+                        isBoxProduct && isCustom
+                          ? options.description
+                          : undefined,
+                      ...(!isBoxProduct(product) ? options : {}),
                     });
                   }}
                   className={`mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow ${
-                    !options.finish ? "cursor-not-allowed" : ""
+                    validateButton(options, isBoxProduct(product), isCustom)
+                      ? "cursor-not-allowed"
+                      : ""
                   }`}
-                  disabled={!!!options.finish}
+                  disabled={validateButton(
+                    options,
+                    isBoxProduct(product),
+                    isCustom
+                  )}
                 >
-                  {!options.finish
-                    ? "Choose a wood finish"
-                    : !added
-                    ? "Add to cart"
-                    : "Added! Add another?"}
+                  {getButtonText(
+                    options,
+                    added,
+                    isBoxProduct(product),
+                    isCustom
+                  )}
                 </button>
               ) : (
                 <div className="text-center mr-10 mb-1" v-else>
@@ -103,13 +118,94 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
   );
 };
 
+const getButtonText = (options, added, isBoxProduct, isCustom) => {
+  if (added) return "Added! Add another?";
+  if (isBoxProduct && isCustom && !options.description)
+    return "Describe the box you want made";
+  if (isBoxProduct && !options.finish) return "Choose a wood finish";
+  if (!isBoxProduct && !(options.sex && options.size && options.color))
+    return "Fill in all the form fields";
+  return "Add to shopping cart";
+};
+
+const setFormValue = (setOptions) => (e) =>
+  setOptions((opts) => ({
+    ...opts,
+    [e.target.name]: e.target.value,
+  }));
+
+const ShirtForm = ({ setOptions, options }) => (
+  <>
+    <label className="block my-4">
+      <span className="text-gray-300">Sex</span>
+      <select
+        defaultValue="ph"
+        className="form-select block w-full mt-1"
+        name="sex"
+        onChange={setFormValue(setOptions)}
+        value={options.sex}
+      >
+        <option value="ph" disabled>
+          -- Choose a value --
+        </option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+    </label>
+    <label className="block my-4">
+      <span className="text-gray-300">Size</span>
+      <select
+        defaultValue="ph"
+        className="form-select block w-full mt-1"
+        name="size"
+        onChange={setFormValue(setOptions)}
+        value={options.size}
+      >
+        <option value="ph" disabled>
+          -- Choose a value --
+        </option>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+        <option value="XXL">XXL</option>
+        <option value="3XL">3XL</option>
+      </select>
+    </label>
+    <label className="block my-4">
+      <span className="text-gray-300">Color</span>
+      <select
+        defaultValue="ph"
+        className="form-select block w-full mt-1"
+        name="color"
+        onChange={setFormValue(setOptions)}
+        value={options.color}
+      >
+        <option disabled value="ph">
+          -- Choose a value --
+        </option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+      </select>
+    </label>
+  </>
+);
+
+const validateButton = (options, isBoxProduct, isCustom) => {
+  if (isBoxProduct) {
+    if (isCustom) return !(options.finish && options.description);
+    return !!!options.finish;
+  }
+  return !(options.sex && options.size && options.color);
+};
+
 const BoxForm = ({ isCustom, setOptions, options, finishes }) => (
   <>
     {isCustom && (
       <label className="block mt-4">
-        <span className="text-gray-700">Box Description</span>
+        <span className="text-gray-600">Box Description</span>
         <textarea
-          className="form-textarea mt-1 block w-full"
+          className="form-textarea mt-1 block w-full bg-gray-900 border-gray-800 text-gray-400"
           rows="3"
           placeholder="Describe what you want on your custom box."
           onChange={(e) =>
@@ -158,6 +254,9 @@ const isBoxProduct = (p = { categories: [] }) =>
   (p || { categories: [] }).categories.some((x) =>
     ["boxes", "custom"].includes(x.slug)
   );
+
+const isShirt = (p = { categories: [] }) =>
+  p.categories.some((x) => x.slug === "shirts");
 
 const isCustomBoxProduct = (p = { categories: [] }) =>
   (p || { categories: [] }).categories.some((x) => x.slug === "custom");

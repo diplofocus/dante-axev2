@@ -11,8 +11,16 @@ const CartItem = ({ item, onRemove = () => {} }) => (
         className="mr-2"
       />
       <h1 className="mr-2 text-gray-400">{item.title}</h1>
-      {item.finish && (
+      {console.log(item)}
+      {item.finish && item.finish.Name && (
         <h2 className="text-gray-500">{item.finish.Name} Finish</h2>
+      )}
+      {isShirt(item) && (
+        <>
+          <h2 className="text-gray-600">{capitalize(item.sex)} &nbsp;</h2>
+          <h2 className="text-gray-600">{capitalize(item.color)} &nbsp;</h2>
+          <h2 className="text-gray-600">{capitalize(item.size)} &nbsp;</h2>
+        </>
       )}
     </div>
     <div className="justify-self-end flex justify-between">
@@ -23,5 +31,8 @@ const CartItem = ({ item, onRemove = () => {} }) => (
     </div>
   </div>
 );
+
+const isShirt = (item) => item.categories.find((x) => x.slug === "shirts");
+const capitalize = s => s.charAt(0).toUpperCase() + s.slice(1);
 
 export default CartItem;
