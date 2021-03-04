@@ -12,9 +12,11 @@ const ShoppingCart = () => {
           <h1 className="prose prose-xl font-bold mt-2 mb-2 text-gray-400">
             Shopping Cart
           </h1>
-          {cart.map((item, idx) => (
-            <CartItem item={item} onRemove={removeItem} key={item.id + idx} />
-          ))}
+          <div className="pb-4">
+            {cart.map((item, idx) => (
+              <CartItem item={item} onRemove={removeItem} key={item.id + idx} />
+            ))}
+          </div>
           {cart.length ? (
             typeof window !== "undefined" && (
               <PayPalButton
@@ -26,7 +28,6 @@ const ShoppingCart = () => {
                 createOrder={(data, actions) => {
                   const payload = {
                     purchase_units: cart.map((i) => {
-                      console.log(i);
                       let id = i.title;
                       if (i.finish) {
                         id += " with " + i.finish.Name + " finish";
