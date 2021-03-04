@@ -45,7 +45,7 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
             </div>
             <div className="w-full p-5 flex flex-col justify-between">
               <div>
-                <h4 className="mt-1 font-semibold text-lg leading-tight truncate text-gray-700">
+                <h4 className="mt-1 font-semibold text-lg leading-tight truncate text-gray-400">
                   {product.title} - ${product.price}
                 </h4>
                 <div className="mt-1 text-gray-600">{product.description}</div>
