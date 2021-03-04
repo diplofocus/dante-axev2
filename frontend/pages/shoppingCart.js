@@ -8,7 +8,7 @@ const ShoppingCart = () => {
   return (
     <Consumer>
       {({ cart, removeItem, clearCart }) => (
-        <div>
+        <div className="m-6">
           <h1 className="prose prose-xl font-bold mt-2 mb-2 text-gray-400">
             Shopping Cart
           </h1>
