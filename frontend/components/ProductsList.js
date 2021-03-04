@@ -9,10 +9,10 @@ const ProductsList = ({ products }) => {
       {products.map((_product) => (
         <div
           key={_product.id}
-          className="border rounded-lg bg-gray-100 hover:shadow-lg shadow-md"
+          className="border-2 border-gray-900 rounded-lg bg-gray-900 hover:shadow-xl shadow-md col-primary-800"
         >
           <a>
-            <div className="cursor-pointer rounded-t-lg bg-white pt-2 pb-2">
+            <div className="cursor-pointer rounded-t-lg bg-gray-800 pb-2">
               <Carousel
                 showThumbs={_product.image.length}
                 infiniteLoop
@@ -31,10 +31,10 @@ const ProductsList = ({ products }) => {
               </Carousel>
             </div>
             <div className="pl-4 pr-4 pb-4 pt-4 rounded-lg">
-              <h4 className="mt-1 font-semibold text-base leading-tight truncate text-gray-700">
+              <h4 className="mt-1 font-semibold text-base leading-tight truncate text-gray-300">
                 {_product.title}
               </h4>
-              <div className="mt-1 text-sm text-gray-700">
+              <div className="mt-1 text-sm text-gray-200">
                 {_product.description}
               </div>
             </div>

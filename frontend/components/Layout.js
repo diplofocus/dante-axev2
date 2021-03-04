@@ -7,8 +7,8 @@ const Layout = ({ children, categories }) => {
   return (
     <Consumer>
       {(value) => (
-        <div className="flex justify-center bg-gray-200">
-          <div className="max-w-screen-lg flex flex-col min-h-screen w-full">
+        <div className="flex justify-center bg-gray-200 bg-gray-800">
+          <div className="max-w-screen-lg flex flex-col min-h-screen w-full bg-gray-800">
             <Navbar />
             <CategoryButtons categories={categories} />
             <div className="flex-grow">{children}</div>

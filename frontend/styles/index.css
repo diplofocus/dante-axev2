@@ -1,3 +1,16 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.thumb {
+    border-color: #1a202c !important;
+
+}
+
+.thumb:hover {
+    border-color: #5a67d8 !important;
+}
+
+.thumb.selected {
+    border-color: #5a67d8 !important;
+}

@@ -9,20 +9,22 @@ const ShoppingCart = () => {
     <Consumer>
       {({ cart, removeItem, clearCart }) => (
         <div>
-          <h1 className="prose prose-xl font-bold mt-2 mb-2">Shopping Cart</h1>
-          {cart.map((item) => (
-            <CartItem item={item} onRemove={removeItem} key={item.id} />
+          <h1 className="prose prose-xl font-bold mt-2 mb-2 text-gray-400">
+            Shopping Cart
+          </h1>
+          {cart.map((item, idx) => (
+            <CartItem item={item} onRemove={removeItem} key={item.id + idx} />
           ))}
           {cart.length ? (
             typeof window !== "undefined" && (
               <PayPalButton
                 currency="EUR"
                 options={{
-                  clientId: process.env.NEXT_PUBLIC_PAYPAL_ID,
+                  clientId: process.env.NEXT_PUBLIC_PAYPAL_ID || "sb",
                   currency: "EUR",
                 }}
                 createOrder={(data, actions) => {
-                  return actions.order.create({
+                  const payload = {
                     purchase_units: cart.map((i) => {
                       console.log(i);
                       let id = i.title;
@@ -38,7 +40,9 @@ const ShoppingCart = () => {
                         },
                       };
                     }),
-                  });
+                  };
+                  console.log(payload);
+                  return actions.order.create(payload);
                 }}
                 onApprove={(data, actions) => {
                   clearCart();
@@ -54,7 +58,9 @@ const ShoppingCart = () => {
           ) : purchaseMade ? (
             <div>Congratulations! Your purchase was successful.</div>
           ) : (
-            <p className="prose prose-m">Your shopping cart is empty</p>
+            <p className="prose prose-m text-gray-300">
+              Your shopping cart is empty
+            </p>
           )}
         </div>
       )}

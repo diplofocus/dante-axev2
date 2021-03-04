@@ -7,10 +7,17 @@ import { Provider } from "../contexts/shoppingCartContext";
 import "../styles/index.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
+const filterFirstById = (arr, id) => {
+  const index = arr.findIndex((x) => x.id === id);
+  return index >= 0
+    ? [...arr.slice(0, index), ...arr.slice(index + 1, arr.length)]
+    : arr;
+};
+
 const MyApp = ({ Component, pageProps }) => {
   const [cart, setCart] = useLocalStorage([], "shopping_cart");
   const addItem = (item) => setCart((cartItems) => [...cartItems, item]);
-  const removeItem = (id) => setCart(cart.filter((i) => i.id !== id));
+  const removeItem = (id) => setCart(filterFirstById(cart, id));
   const clearCart = () => setCart([]);
   return (
     <Provider value={{ cart, addItem, removeItem, clearCart }}>

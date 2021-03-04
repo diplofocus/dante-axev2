@@ -7,10 +7,11 @@ import { Carousel } from "react-responsive-carousel";
 import { Consumer } from "../../contexts/shoppingCartContext";
 
 const ProductPage = ({ product, finishes = [], finishOptions }) => {
-  const [finish, setFinish] = useState(null);
+  const [options, setOptions] = useState({});
   const [added, setAdded] = useState(false);
-  const [customDescription, setDesc] = useState("");
-  const currentFinish = finishes.find((f) => f.id === finish) || {};
+  const currentFinish = options.finish
+    ? finishes.find((f) => f.id === options.finish)
+    : {};
   const isCustom = isCustomBoxProduct(product);
   const router = useRouter();
   if (router.isFallback) {
@@ -49,46 +50,12 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                 </h4>
                 <div className="mt-1 text-gray-600">{product.description}</div>
                 {isBoxProduct(product) && (
-                  <>
-                    {isCustom && (
-                      <label className="block mt-4">
-                        <span className="text-gray-700">Box Description</span>
-                        <textarea
-                          className="form-textarea mt-1 block w-full"
-                          rows="3"
-                          placeholder="Describe what you want on your custom box."
-                          onChange={(e) => setDesc(e.target.value)}
-                          value={customDescription}
-                        ></textarea>
-                      </label>
-                    )}
-                    <div className="mt-4 text-gray-600 grid grid-cols-2 gap-4">
-                      {finishes.map((x) => (
-                        <div className="text-center">
-                          <img
-                            onClick={() => setFinish(x.id)}
-                            key={x.id}
-                            src={getStrapiMedia(x.FinishImage.url)}
-                            alt={x.id}
-                            width="auto"
-                            height="200px"
-                            className={
-                              (finish === x.id &&
-                                "border-solid border-8 border-primary-600") ||
-                              ""
-                            }
-                          />
-                          <p
-                            className={
-                              (finish === x.id && " font-semibold") || ""
-                            }
-                          >
-                            {x.Name}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </>
+                  <BoxForm
+                    isCustom={isCustom}
+                    setOptions={setOptions}
+                    options={options}
+                    finishes={finishes}
+                  />
                 )}
               </div>
 
@@ -99,15 +66,15 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
                     addItem({
                       ...product,
                       finish: currentFinish,
-                      customDescription: customDescription || undefined,
+                      customDescription: options.description || undefined,
                     });
                   }}
                   className={`mt-4 bg-white border border-gray-200 d hover:shadow-lg text-gray-700 font-semibold py-2 px-4 rounded shadow ${
-                    !finish ? "cursor-not-allowed" : ""
+                    !options.finish ? "cursor-not-allowed" : ""
                   }`}
-                  disabled={!!!finish}
+                  disabled={!!!options.finish}
                 >
-                  {!finish
+                  {!options.finish
                     ? "Choose a wood finish"
                     : !added
                     ? "Add to cart"
@@ -135,6 +102,55 @@ const ProductPage = ({ product, finishes = [], finishOptions }) => {
     </div>
   );
 };
+
+const BoxForm = ({ isCustom, setOptions, options, finishes }) => (
+  <>
+    {isCustom && (
+      <label className="block mt-4">
+        <span className="text-gray-700">Box Description</span>
+        <textarea
+          className="form-textarea mt-1 block w-full"
+          rows="3"
+          placeholder="Describe what you want on your custom box."
+          onChange={(e) =>
+            setOptions((o) => ({
+              ...o,
+              description: e.target.value,
+            }))
+          }
+          value={options.description}
+        ></textarea>
+      </label>
+    )}
+    <div className="mt-4 text-gray-600 grid grid-cols-2 gap-4">
+      {finishes.map((x) => (
+        <div className="text-center" key={x.id}>
+          <img
+            onClick={() => setOptions((o) => ({ ...o, finish: x.id }))}
+            key={x.id}
+            src={getStrapiMedia(x.FinishImage.url)}
+            alt={x.id}
+            width="auto"
+            height="200px"
+            className={
+              (options.finish === x.id &&
+                "border-solid border-8 border-primary-600") ||
+              ""
+            }
+          />
+          <p
+            className={
+              (options.finish === x.id && "font-semibold text-primary-200") ||
+              ""
+            }
+          >
+            {x.Name}
+          </p>
+        </div>
+      ))}
+    </div>
+  </>
+);
 
 export default ProductPage;
 

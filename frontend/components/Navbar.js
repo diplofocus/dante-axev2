@@ -5,9 +5,9 @@ const Navbar = () => {
   return (
     <Consumer>
       {({ cart }) => (
-        <div className="flex justify-between ml-6 mr-6 mt-4">
+        <div className="flex justify-between ml-6 mr-6 mt-4 ">
           <Link href="/">
-            <a>
+          <a className="rounded hover:bg-primary-700 p-2">
               <img
                 src="/dante.png"
                 alt="home"
