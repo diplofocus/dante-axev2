@@ -32,7 +32,7 @@ const ShoppingCart = () => {
                       let desc = i.title;
                       if (i.finish) {
                         desc += " box with " + i.finish.Name + " finish";
-                        if (i.description) {
+                        if (i.customDescription) {
                           desc += ` with custom description "${i.customDescription}"`;
                         }
                       } else if (i.size) {
