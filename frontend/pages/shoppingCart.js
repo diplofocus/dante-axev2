@@ -57,8 +57,8 @@ const ShoppingCart = () => {
                 return !!cart.length && actions.order.create(payload);
               }}
               onApprove={(data, actions) => {
+                actions.order.capture();
                 clearCart();
-                /* const test = actions.order.get(); */
                 setPurchaseMade(true);
                 /* const orderResponse = { */
                 /*   orderId: data.orderID, */
