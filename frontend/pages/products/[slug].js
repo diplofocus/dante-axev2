@@ -8,7 +8,6 @@ import { Consumer } from "../../contexts/shoppingCartContext";
 
 const ProductPage = ({ product, finishes = [], finishOptions }) => {
   const [options, setOptions] = useState({});
-  console.log(options);
   const [added, setAdded] = useState(false);
   const currentFinish = options.finish
     ? finishes.find((f) => f.id === options.finish)

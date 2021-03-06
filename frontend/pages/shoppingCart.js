@@ -28,13 +28,24 @@ const ShoppingCart = () => {
                 createOrder={(data, actions) => {
                   const payload = {
                     purchase_units: cart.map((i) => {
-                      let id = i.title;
+                      console.log(i);
+                      let desc = i.title;
                       if (i.finish) {
-                        id += " with " + i.finish.Name + " finish";
+                        desc += " box with " + i.finish.Name + " finish";
+                        if (i.description) {
+                          desc += ` with custom description "${i.customDescription}"`;
+                        }
+                      } else if (i.size) {
+                        desc += ` shirt size ${i.size} color ${i.color} sex ${i.sex}`;
                       }
                       return {
-                        reference_id: id,
-                        item: i,
+                        reference_id: i.title,
+                        description: desc,
+                        items: [
+                          {
+                            name: i.Name,
+                          },
+                        ],
                         amount: {
                           currency_code: "EUR",
                           value: i.price,
@@ -42,14 +53,11 @@ const ShoppingCart = () => {
                       };
                     }),
                   };
-                  console.log(payload);
                   return actions.order.create(payload);
                 }}
                 onApprove={(data, actions) => {
                   clearCart();
-                  console.log("data", data);
                   const test = actions.order.get();
-                  console.log(test);
                   setPurchaseMade(true);
                   const orderResponse = {
                     orderId: data.orderID,
