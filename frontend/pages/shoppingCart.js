@@ -17,7 +17,7 @@ const ShoppingCart = () => {
               <CartItem item={item} onRemove={removeItem} key={item.id + idx} />
             ))}
           </div>
-          {cart.length ? (
+          {cart.length || purchaseMade ? (
             typeof window !== "undefined" && (
               <PayPalButton
                 currency="EUR"
