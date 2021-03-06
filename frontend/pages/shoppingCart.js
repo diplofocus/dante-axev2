@@ -28,7 +28,6 @@ const ShoppingCart = () => {
                 createOrder={(data, actions) => {
                   const payload = {
                     purchase_units: cart.map((i) => {
-                      console.log(i);
                       let desc = i.title;
                       if (i.finish) {
                         desc += " box with " + i.finish.Name + " finish";
