@@ -41,11 +41,6 @@ const ShoppingCart = () => {
                       return {
                         reference_id: i.title,
                         description: desc,
-                        items: [
-                          {
-                            name: i.Name,
-                          },
-                        ],
                         amount: {
                           currency_code: "EUR",
                           value: i.price,
