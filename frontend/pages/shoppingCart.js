@@ -47,6 +47,9 @@ const ShoppingCart = () => {
                 }}
                 onApprove={(data, actions) => {
                   clearCart();
+                  console.log("data", data);
+                  const test = actions.order.get();
+                  console.log(test);
                   setPurchaseMade(true);
                   const orderResponse = {
                     orderId: data.orderID,
